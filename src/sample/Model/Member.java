@@ -5,25 +5,26 @@ import javafx.scene.control.DatePicker;
 /**
  * Created by Christian Findsen on 17-04-2017.
  */
-public class Member {
+public class Member
+{
 
     private String firstName;
     private String lastName;
-    private  String address;
+    private String address;
     private int zipcode;
-    private  String city;
-    private  DatePicker datePicker;
-    private   String email;
+    private String city;
+    private DatePicker datePicker;
+    private String email;
 
-    public Member (String firstName, String lastName, String address, int zipcode, String city, DatePicker datePicker, String email)
+    public Member(String firstName, String lastName, String address, int zipcode, String city, DatePicker datePicker, String email)
     {
-        this.firstName  = firstName;
-        this.lastName   = lastName;
-        this.address    = address;
-        this.zipcode    = zipcode;
-        this.city       = city;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.city = city;
         this.datePicker = datePicker;
-        this.email      = email;
+        this.email = email;
 
     }
 

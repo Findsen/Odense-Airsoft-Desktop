@@ -50,20 +50,20 @@ public class Controller{
         LastName.clear();
 
 
-        videre();
+
     }
 
-    public void videre() throws IOException
+    public void createMember() throws IOException
     {
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("View/menuMen.fxml"));
+        Parent mainMenu = FXMLLoader.load(getClass().getResource("../View/CreateMemberPage.fxml"));
         Scene mainScene = new Scene(mainMenu);
         mainStage.setScene(mainScene);
     }
 
-    public void loginPressed(ActionEvent event) throws IOException
+    public void loginPressed() throws IOException
     {
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("View/MainMenu.fxml"));
-        Scene mainScene = new Scene(mainMenu);
+        Parent login = FXMLLoader.load(getClass().getResource("../View/MainMenu.fxml"));
+        Scene mainScene = new Scene(login);
         mainStage.setScene(mainScene);
     }
 }

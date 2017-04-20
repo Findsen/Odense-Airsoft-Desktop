@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Parent root = FXMLLoader.load(getClass().getResource("View/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
 
         Controller.initializeController(primaryStage);
         primaryStage.setTitle("Login Window - Odense Airsoft");
