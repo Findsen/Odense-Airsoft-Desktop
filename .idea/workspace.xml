@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/sample/View/member.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/sample/View/menuMen.fxml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Controller/Controller.class" afterPath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Controller/Controller.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Main.class" afterPath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Model/Member.class" afterPath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/Model/Member.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/sample/View/CreateMemberPage.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/View/MainMenu.fxml" afterPath="$PROJECT_DIR$/out/production/JavaFX_Leg/sample/View/MainMenu.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/Controller/Controller.java" afterPath="$PROJECT_DIR$/src/sample/Controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/Main.java" afterPath="$PROJECT_DIR$/src/sample/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/Model/Member.java" afterPath="$PROJECT_DIR$/src/sample/Model/Member.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sample/View/MainMenu.fxml" afterPath="$PROJECT_DIR$/src/sample/View/MainMenu.fxml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -790,12 +781,20 @@
       <workItem from="1492636992472" duration="348000" />
       <workItem from="1492637806638" duration="166000" />
       <workItem from="1492690643510" duration="7552000" />
-      <workItem from="1492719724273" duration="26000" />
+      <workItem from="1492719724273" duration="100000" />
     </task>
+    <task id="LOCAL-00001" summary="Rettelser">
+      <created>1492719768268</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1492719768269</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21656000" />
+    <option name="totallyTimeSpent" value="21730000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
@@ -846,6 +845,8 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="Rettelser" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rettelser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1173,6 +1174,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1309">
           <caret line="95" column="38" lean-forward="true" selection-start-line="95" selection-start-column="38" selection-end-line="95" selection-end-column="38" />
+          <folding>
+            <element signature="e#750#751#0" expanded="false" />
+            <element signature="e#782#783#0" expanded="false" />
+            <element signature="e#836#837#0" expanded="false" />
+            <element signature="e#878#879#0" expanded="false" />
+            <element signature="e#917#918#0" expanded="false" />
+            <element signature="e#948#949#0" expanded="false" />
+            <element signature="e#1000#1001#0" expanded="false" />
+            <element signature="e#1040#1041#0" expanded="false" />
+            <element signature="e#1078#1079#0" expanded="false" />
+            <element signature="e#1108#1109#0" expanded="false" />
+            <element signature="e#1158#1159#0" expanded="false" />
+            <element signature="e#1196#1197#0" expanded="false" />
+            <element signature="e#1231#1232#0" expanded="false" />
+            <element signature="e#1261#1262#0" expanded="false" />
+            <element signature="e#1308#1309#0" expanded="false" />
+            <element signature="e#1346#1347#0" expanded="false" />
+            <element signature="e#1381#1382#0" expanded="false" />
+            <element signature="e#1408#1409#0" expanded="false" />
+            <element signature="e#1452#1453#0" expanded="false" />
+            <element signature="e#1484#1485#0" expanded="false" />
+            <element signature="e#1529#1530#0" expanded="false" />
+            <element signature="e#1562#1563#0" expanded="false" />
+            <element signature="e#1622#1623#0" expanded="false" />
+            <element signature="e#1666#1667#0" expanded="false" />
+            <element signature="e#1702#1703#0" expanded="false" />
+            <element signature="e#1730#1731#0" expanded="false" />
+            <element signature="e#1776#1777#0" expanded="false" />
+            <element signature="e#1810#1811#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
