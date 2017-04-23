@@ -10,10 +10,10 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="MainMenuButoon_MemberList" layoutX="274.0" layoutY="89.0" mnemonicParsing="false" text="Medlems Liste" />
+                  <Button fx:id="MainMenuButoon_MemberList" layoutX="274.0" layoutY="89.0" mnemonicParsing="false" text="Medlems Liste" onAction="#pressedMemberList" />
                   <Button fx:id="MainMenuButoon_CreateMember" layoutX="274.0" layoutY="161.0" mnemonicParsing="false" onAction="#createMember" text="Opret medlem" />
                   <Button fx:id="MainMenuButoon_Admin" layoutX="274.0" layoutY="233.0" mnemonicParsing="false" text="Administrator" />
-                  <Button fx:id="MainMenuButoon_LogOut" layoutX="518.0" layoutY="317.0" mnemonicParsing="false" text="Log ud" />
+                  <Button fx:id="MainMenuButoon_LogOut" layoutX="518.0" layoutY="317.0" mnemonicParsing="false" text="Log ud" onAction="#pressedLogOutButton" />
                </children></AnchorPane>
       </content>
     </Tab>

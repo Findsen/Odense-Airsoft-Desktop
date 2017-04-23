@@ -24,6 +24,6 @@
       <Label fx:id="label_MemberQuestion" layoutX="38.0" layoutY="268.0" text="Medlem?" />
       <RadioButton fx:id="radio_MemberNo" layoutX="81.0" layoutY="293.0" mnemonicParsing="false" text="Nej" />
       <Button layoutX="429.0" layoutY="353.0" mnemonicParsing="false" onAction="#send" text="Send" />
-      <Button fx:id="button_Cancel" layoutX="497.0" layoutY="353.0" mnemonicParsing="false" onAction="#clear" text="Fortryd" />
+      <Button fx:id="button_Cancel" layoutX="497.0" layoutY="353.0" mnemonicParsing="false" onAction="#backMainMenu" text="Fortryd"  />
    </children>
 </Pane>

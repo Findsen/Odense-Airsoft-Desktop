@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Controller" xmlns="http://javafx.com/javafx/8">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="602.0">
+         <children>
+            <Label layoutX="7.0" layoutY="7.0" prefHeight="36.0" prefWidth="158.0" text="Medlemsliste">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="43.0" text="Fornavn" />
+            <Label layoutX="29.0" layoutY="85.0" text="Efternavn" />
+            <TextField layoutX="29.0" layoutY="60.0" />
+            <TextField layoutX="29.0" layoutY="102.0" />
+            <TableView fx:id="Member_Table" layoutX="201.0" layoutY="15.0" prefHeight="688.0" prefWidth="504.0" >
+              <columns>
+
+                <TableColumn prefWidth="75.0" text="Fornavn" fx:id="first_nameColumn" />
+                <TableColumn prefWidth="75.0" text="Efternavn" fx:id="last_nameColumn" />
+                <TableColumn prefWidth="75.0" text="Adresse" fx:id="addressColumn" />
+                <TableColumn prefWidth="75.0" text="Postnr" fx:id="zipCodeColumn"  />
+                <TableColumn prefWidth="75.0" text="By" fx:id="cityColumn" />
+                <TableColumn prefWidth="75.0" text="Email" fx:id="emailColumn" />
+                <TableColumn prefWidth="75.0" text="Tlf" fx:id="phoneColumn"  />
+                <TableColumn prefWidth="75.0" text="Fødselsdag" fx:id="birthdayColumn" />
+                <TableColumn prefWidth="75.0" text="Medlem indtil" fx:id="memberUntilColumn" />
+                <TableColumn prefWidth="75.0" text="ID nummer" fx:id="idColumn" />
+              </columns>
+            </TableView>
+            <Button layoutX="25.0" layoutY="158.0" mnemonicParsing="false" text="Søg" />
+            <Button layoutX="18.0" layoutY="347.0" mnemonicParsing="false" text="Ok" />
+            <Button layoutX="126.0" layoutY="347.0" mnemonicParsing="false" text="Tilbage" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
