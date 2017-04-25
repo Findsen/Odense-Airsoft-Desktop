@@ -1,6 +1,5 @@
 package sample.Model;
 
-import javafx.scene.control.DatePicker;
 
 /**
  * Created by Christian Findsen on 17-04-2017.
@@ -155,5 +154,12 @@ public class ODA_Member
     public void setId(String id)
     {
         this.id = id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return (memberId + " " + first_Name + " " + last_Name + " " + address + " " + zipcode
+                + " " + city + " " + phoneNumber + " " + birthday + " " + member_Until + " " + id);
     }
 }

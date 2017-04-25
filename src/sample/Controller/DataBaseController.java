@@ -5,18 +5,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Model.ODA_Member;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Arrays;
 
 /**
  * Created by Christian Findsen on 23-04-2017.
  */
 public class DataBaseController
 {
+    private String url = "jdbc:mysql://localhost:3306?useSSL=false";
+    private String user = "root";
+    private String pass = "Nastusha0309";
+    private Connection myConnection;
 
-    public static ObservableList<ODA_Member> dateBaseController()
+
+
+    public ObservableList<ODA_Member> getMember()
     {
 
         ObservableList<ODA_Member> ODAMembers = FXCollections.observableArrayList();
@@ -24,10 +28,10 @@ public class DataBaseController
         try {
             System.out.println("Establising a connection for database");
 
-            Connection myConnection = DriverManager.getConnection
-                    (
-                            "jdbc:mysql://localhost:3306", "root", "Nastusha0309"
-                    );
+            myConnection = DriverManager.getConnection(url,user,pass);
+
+
+            System.out.println("Connection has been established");
 
             // Creating the statement for the SQL Server
             Statement myStmt = myConnection.createStatement();
@@ -52,6 +56,7 @@ public class DataBaseController
                 String member_until = myRes.getString("Member_until");
                 String id = myRes.getString("ID_Card_Number");
 
+
                 //Building an ODAMembers object with all these parameters
                 ODAMembers.add
                         (
@@ -61,13 +66,31 @@ public class DataBaseController
                                         birthday, member_until,id)
                         );
 
+
             }
+
 
         }catch (Exception exc)
         {
-           exc.printStackTrace();
+            exc.printStackTrace();
         }
 
         return ODAMembers;
+
     }
+
+//    public void updateMember()
+//    {
+//        try {
+//            myConnection = DriverManager.getConnection(url,user,pass);
+//
+//            Statement myStmt = myConnection.createStatement();
+//
+//            myStmt.execute("UPDATE ")
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
