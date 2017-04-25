@@ -1,6 +1,6 @@
 package sample.Controller;
 
-import javafx.collections.ObservableList;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
@@ -103,7 +102,7 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        memberIdColumn.setCellFactory(new PropertyValueFactory<ODA_Member, Integer>("memberId"));
+        memberIdColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, Integer>("memberId"));
         memberIdColumn.setCellFactory(TextFieldTableCell.<ODA_Member, Integer>forTableColumn(new IntegerStringConverter()));
 
         first_nameColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("first_Name"));
