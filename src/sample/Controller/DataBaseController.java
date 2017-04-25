@@ -79,18 +79,31 @@ public class DataBaseController
 
     }
 
-//    public void updateMember()
-//    {
-//        try {
-//            myConnection = DriverManager.getConnection(url,user,pass);
-//
-//            Statement myStmt = myConnection.createStatement();
-//
-//            myStmt.execute("UPDATE ")
-//        }catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public void updateMember(String column, String correction, int pos)
+    {
+        try {
+            myConnection = DriverManager.getConnection(url,user,pass);
+
+            Statement myStmt = myConnection.createStatement();
+
+            myStmt.executeUpdate("UPDATE mydb.memberlist SET "+column+" = "+"\'"+ correction+"\'"+" WHERE Member_ID = "+pos+";");
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void searchMember()
+    {
+        try {
+            myConnection = DriverManager.getConnection(url,user,pass);
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
+
+

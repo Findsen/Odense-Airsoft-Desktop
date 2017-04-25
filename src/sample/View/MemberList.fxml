@@ -20,7 +20,7 @@
             <TextField layoutX="29.0" layoutY="102.0" />
             <TableView fx:id="Member_Table" editable="true" layoutX="200.0" layoutY="12.0" prefHeight="780.0" prefWidth="983.0">
               <columns>
-                <TableColumn fx:id="memberIdColumn" prefWidth="75.0" text="ID"  />
+                <TableColumn fx:id="memberIdColumn" editable="false" prefWidth="75.0" text="ID" visible="false" />
                 <TableColumn fx:id="first_nameColumn" prefWidth="75.0" text="Fornavn" />
                 <TableColumn fx:id="last_nameColumn" prefWidth="75.0" text="Efternavn" />
                 <TableColumn fx:id="addressColumn" prefWidth="96.0" text="Adresse" />
@@ -38,7 +38,7 @@
             </TableView>
             <Button fx:id="button_List_search" layoutX="25.0" layoutY="158.0" mnemonicParsing="false" onAction="#editableTable" text="Søg" />
             <Button layoutX="18.0" layoutY="347.0" mnemonicParsing="false" text="Ok" />
-            <Button layoutX="126.0" layoutY="347.0" mnemonicParsing="false" text="Tilbage" />
+            <Button fx:id="button_List_Back" layoutX="126.0" layoutY="347.0" mnemonicParsing="false" onAction="#backMainMenu" text="Tilbage" />
          </children></AnchorPane>
   </content>
 </ScrollPane>

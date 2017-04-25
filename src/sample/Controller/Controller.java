@@ -96,56 +96,155 @@ public class Controller implements Initializable
     public void editableTable()
     {
         Member_Table.setEditable(true);
-        System.out.println();
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        memberIdColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, Integer>("memberId"));
-        memberIdColumn.setCellFactory(TextFieldTableCell.<ODA_Member, Integer>forTableColumn(new IntegerStringConverter()));
+//        memberIdColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, Integer>("memberId"));
+//        memberIdColumn.setCellFactory(TextFieldTableCell.<ODA_Member, Integer>forTableColumn(new IntegerStringConverter()));
 
         first_nameColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("first_Name"));
         first_nameColumn.setCellFactory(forTableColumn());
         first_nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
         {
-
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
                 ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setFirst_Name(event.getNewValue());
                 System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
 
+                dataBaseController.updateMember("First_Name",event.getNewValue(),event.getRowValue().getMemberId());
             }
         });
 
 
-
         last_nameColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("last_Name"));
         last_nameColumn.setCellFactory(forTableColumn());
+        last_nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setLast_Name(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Last_Name",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         addressColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("address"));
         addressColumn.setCellFactory(forTableColumn());
+        addressColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setAddress(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Address",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         zipCodeColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, Integer>("zipcode"));
         zipCodeColumn.setCellFactory(TextFieldTableCell.<ODA_Member, Integer>forTableColumn(new IntegerStringConverter()));
+        zipCodeColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,Integer>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, Integer> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setZipcode(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+               dataBaseController.updateMember("Zipcode",String.valueOf(event.getNewValue()),event.getRowValue().getMemberId());
+            }
+        });
 
         cityColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("city"));
         cityColumn.setCellFactory(forTableColumn());
+        cityColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setCity(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("City",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         emailColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("email"));
         emailColumn.setCellFactory(forTableColumn());
+        emailColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setEmail(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Email",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         phoneColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("phoneNumber"));
         phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        phoneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setPhoneNumber(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Phonenumber",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         birthdayColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("birthday"));
         birthdayColumn.setCellFactory(forTableColumn());
+        birthdayColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setBirthday(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Birthday",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         memberUntilColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("member_Until"));
         memberUntilColumn.setCellFactory(forTableColumn());
+        memberUntilColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setMember_Until(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("Member_until",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         idColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("id"));
         idColumn.setCellFactory(forTableColumn());
+        idColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
+        {
+            public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
+            {
+                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setId(event.getNewValue());
+                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
+                System.out.println(event.getRowValue().getMemberId());
+
+                dataBaseController.updateMember("ID_Card_Number",event.getNewValue(),event.getRowValue().getMemberId());
+            }
+        });
 
         Member_Table.setItems(dataBaseController.getMember());
         Member_Table.setEditable(false);
