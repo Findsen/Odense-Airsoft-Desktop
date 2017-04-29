@@ -2,7 +2,6 @@
 
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Controller">
@@ -16,8 +15,8 @@
             </Label>
             <Label layoutX="29.0" layoutY="43.0" text="Fornavn" />
             <Label layoutX="29.0" layoutY="85.0" text="Efternavn" />
-            <TextField layoutX="29.0" layoutY="60.0" />
-            <TextField layoutX="29.0" layoutY="102.0" />
+            <TextField fx:id="search_FirstName" layoutX="29.0" layoutY="60.0" />
+            <TextField fx:id="search_LastName" layoutX="29.0" layoutY="102.0" />
             <TableView fx:id="Member_Table" editable="true" layoutX="200.0" layoutY="12.0" prefHeight="780.0" prefWidth="983.0">
               <columns>
                 <TableColumn fx:id="memberIdColumn" editable="false" prefWidth="75.0" text="ID" visible="false" />
@@ -30,15 +29,16 @@
                 <TableColumn fx:id="phoneColumn" prefWidth="111.0" text="Tlf" />
                 <TableColumn fx:id="birthdayColumn" prefWidth="109.0" text="Fødselsdag" />
                 <TableColumn fx:id="memberUntilColumn" prefWidth="110.0" text="Medlem indtil" />
-                <TableColumn fx:id="idColumn" prefWidth="86.0" text="ID nummer" />
+                <TableColumn fx:id="idColumn" prefWidth="86.0" text="ID nummer" visible="false"/>
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="button_List_search" layoutX="25.0" layoutY="158.0" mnemonicParsing="false" onAction="#editableTable" text="Søg" />
-            <Button layoutX="18.0" layoutY="347.0" mnemonicParsing="false" text="Ok" />
-            <Button fx:id="button_List_Back" layoutX="126.0" layoutY="347.0" mnemonicParsing="false" onAction="#backMainMenu" text="Tilbage" />
+            <Button fx:id="button_List_search" layoutX="32.0" layoutY="146.0" mnemonicParsing="false" onAction="#searchODA" text="Søg" />
+            <Button layoutX="7.0" layoutY="754.0" mnemonicParsing="false" text="Ok" />
+            <Button fx:id="button_List_Back" layoutX="110.0" layoutY="754.0" mnemonicParsing="false" onAction="#backMainMenu" text="Tilbage" />
+            <Button fx:id="search_Refresh" layoutX="109.0" layoutY="146.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
          </children></AnchorPane>
   </content>
 </ScrollPane>

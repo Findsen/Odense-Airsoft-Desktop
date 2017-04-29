@@ -13,8 +13,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import sample.Model.ODA_Member;
+
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
@@ -30,7 +33,12 @@ public class Controller implements Initializable
     // Member
     @FXML private TextField FirstName;
     @FXML private TextField LastName;
+    @FXML private TextField textfield_Adress;
+    @FXML private TextField textfield_ZipCode;
+    @FXML private TextField textfield_City;
     @FXML private DatePicker datepicker_Birthday;
+    @FXML private TextField textfield_Email;
+
 
     //Login
     @FXML private PasswordField Login_passwordField;
@@ -51,6 +59,9 @@ public class Controller implements Initializable
     @FXML private TableColumn birthdayColumn     = new TableColumn();
     @FXML private TableColumn memberUntilColumn  = new TableColumn();
     @FXML private TableColumn idColumn           = new TableColumn();
+
+    @FXML private TextField search_FirstName;
+    @FXML private TextField search_LastName;
 
 
 
@@ -93,17 +104,35 @@ public class Controller implements Initializable
         mainStage.setScene(mainScene);
     }
 
-    public void editableTable()
+    public void refresh()
     {
-        Member_Table.setEditable(true);
+        Member_Table.setItems(dataBaseController.getMember());
 
     }
+
+    public void searchODA()
+    {
+        Member_Table.setItems(dataBaseController.searchMember(search_FirstName.getText(),search_LastName.getText()));
+    }
+
+    public void createODAMember()
+    {
+
+
+        dataBaseController.createMember(FirstName.getText(),
+                LastName.getText(),
+                textfield_Adress.getText(),
+                Integer.parseInt(textfield_ZipCode.getText()),
+                textfield_City.getText(),
+                (datepicker_Birthday.getEditor()).getText(),
+                textfield_Email.getText());
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-//        memberIdColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, Integer>("memberId"));
-//        memberIdColumn.setCellFactory(TextFieldTableCell.<ODA_Member, Integer>forTableColumn(new IntegerStringConverter()));
 
         first_nameColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("first_Name"));
         first_nameColumn.setCellFactory(forTableColumn());
@@ -247,7 +276,7 @@ public class Controller implements Initializable
         });
 
         Member_Table.setItems(dataBaseController.getMember());
-        Member_Table.setEditable(false);
+        Member_Table.setEditable(true);
 
 
     }

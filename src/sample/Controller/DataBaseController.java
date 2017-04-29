@@ -3,6 +3,9 @@ package sample.Controller;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import sample.Model.ODA_Member;
 
 import java.sql.*;
@@ -19,19 +22,29 @@ public class DataBaseController
     private Connection myConnection;
 
 
-
-    public ObservableList<ODA_Member> getMember()
+    private void connectionForDB()
     {
-
-        ObservableList<ODA_Member> ODAMembers = FXCollections.observableArrayList();
-
         try {
-            System.out.println("Establising a connection for database");
 
             myConnection = DriverManager.getConnection(url,user,pass);
 
 
-            System.out.println("Connection has been established");
+        }catch (Exception exc)
+        {
+            exc.printStackTrace();
+        }
+
+
+    }
+
+    public ObservableList<ODA_Member> getMember()
+    {
+        ObservableList<ODA_Member> ODAMembers = FXCollections.observableArrayList();
+
+        try {
+
+
+            connectionForDB();
 
             // Creating the statement for the SQL Server
             Statement myStmt = myConnection.createStatement();
@@ -82,7 +95,7 @@ public class DataBaseController
     public void updateMember(String column, String correction, int pos)
     {
         try {
-            myConnection = DriverManager.getConnection(url,user,pass);
+           connectionForDB();
 
             Statement myStmt = myConnection.createStatement();
 
@@ -94,15 +107,88 @@ public class DataBaseController
 
     }
 
-    public void searchMember()
+    public ObservableList<ODA_Member> searchMember(String firstName, String lastName)
     {
+        ObservableList<ODA_Member> searchODA = FXCollections.observableArrayList();
+
+        searchODA.clear();
         try {
-            myConnection = DriverManager.getConnection(url,user,pass);
+           connectionForDB();
+
+            // Creating the statement for the SQL Server
+            Statement myStmt = myConnection.createStatement();
+
+            // Creating the mySQL Query to be executed
+            ResultSet myRes = myStmt.executeQuery ("SELECT *" +
+                    " FROM mydb.memberlist WHERE First_Name = '"+firstName+"' OR Last_Name = '"+lastName+"';");
+
+            while (myRes.next()) {
+
+                // Retrieving the info from the database
+                int Member_ID = myRes.getInt("Member_ID");
+                String first_name = myRes.getString("First_Name");
+                String last_name = myRes.getString("Last_Name");
+                String address = myRes.getString("Address");
+                int zipcode = myRes.getInt("Zipcode");
+                String city = myRes.getString("City");
+                String email = myRes.getString("Email");
+                String phonenumber = myRes.getString("Phonenumber");
+                String birthday = myRes.getString("Birthday");
+                String member_until = myRes.getString("Member_until");
+                String id = myRes.getString("ID_Card_Number");
+
+
+                //Building an ODAMembers object with all these parameters
+                searchODA.add
+                        (
+                                new ODA_Member(
+                                        Member_ID, first_name, last_name,
+                                        address, zipcode, city, email, phonenumber,
+                                        birthday, member_until,id)
+                        );
+
+            }
 
         }catch (Exception e)
         {
             e.printStackTrace();
         }
+        return searchODA;
+    }
+
+    public void createMember(String firstName, String lastName, String address, int zipCode, String city, String date, String email)
+    {
+
+        try {
+            connectionForDB();
+
+            PreparedStatement myStmt = myConnection.prepareStatement(
+                    "INSERT INTO mydb.memberlist(First_Name,Last_Name,Address,Zipcode,City," +
+                            "Email,Birthday, Member_until, ID_Card_Number) "+
+                            "VALUES(?,?,?,?,?,?,?,?,?)");
+
+            myStmt.setString(1, firstName);
+            myStmt.setString(2, lastName);
+            myStmt.setString(3, address);
+            myStmt.setInt(4, zipCode);
+            myStmt.setString(5, city);
+            myStmt.setString(6, email);
+            myStmt.setString(7, date);
+            myStmt.setString(8,date);
+            myStmt.setString(9,"0");
+
+
+
+            myStmt.executeUpdate();
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }
 

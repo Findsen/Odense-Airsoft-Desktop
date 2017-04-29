@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
 <Pane fx:id="label_Member" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Controller">
    <children>
-      <Label fx:id="label_FirstName" layoutX="38.0" layoutY="26.0" text="Fornavn" />
-      <Label fx:id="label_LastName" layoutX="206.0" layoutY="26.0" text="Efternavn" />
-      <Label fx:id="label_Adress" layoutX="38.0" layoutY="77.0" text="Adresse" />
-      <Label fx:id="label_ZipCode" layoutX="38.0" layoutY="123.0" text="Postnr" />
-      <Label fx:id="label_City" layoutX="206.0" layoutY="123.0" text="By" />
+      <Label layoutX="38.0" layoutY="26.0" text="Fornavn" />
+      <Label layoutX="206.0" layoutY="26.0" text="Efternavn" />
+      <Label layoutX="38.0" layoutY="77.0" text="Adresse" />
+      <Label layoutX="38.0" layoutY="123.0" text="Postnr" />
+      <Label layoutX="206.0" layoutY="123.0" text="By" />
       <TextField fx:id="FirstName" layoutX="38.0" layoutY="43.0" />
       <TextField fx:id="LastName" layoutX="206.0" layoutY="43.0" />
       <TextField fx:id="textfield_Adress" layoutX="38.0" layoutY="94.0" prefHeight="25.0" prefWidth="318.0" />
       <TextField fx:id="textfield_ZipCode" layoutX="38.0" layoutY="140.0" />
       <TextField fx:id="textfield_City" layoutX="206.0" layoutY="140.0" />
-      <Label fx:id="label_Birthday" layoutX="38.0" layoutY="172.0" text="Fødselsdag" />
+      <Label layoutX="38.0" layoutY="172.0" text="Fødselsdag" />
       <DatePicker fx:id="datepicker_Birthday" layoutX="38.0" layoutY="189.0" />
-      <Label fx:id="label_Email" layoutX="37.0" layoutY="220.0" text="Email" />
+      <Label layoutX="37.0" layoutY="220.0" text="Email" />
       <TextField fx:id="textfield_Email" layoutX="38.0" layoutY="237.0" prefHeight="25.0" prefWidth="174.0" />
       <RadioButton fx:id="radio_MemberYes" layoutX="38.0" layoutY="293.0" mnemonicParsing="false" text="Ja" />
-      <Label fx:id="label_MemberQuestion" layoutX="38.0" layoutY="268.0" text="Medlem?" />
+      <Label layoutX="38.0" layoutY="268.0" text="Medlem?" />
       <RadioButton fx:id="radio_MemberNo" layoutX="81.0" layoutY="293.0" mnemonicParsing="false" text="Nej" />
-      <Button layoutX="429.0" layoutY="353.0" mnemonicParsing="false" onAction="#send" text="Send" />
-      <Button fx:id="button_Cancel" layoutX="497.0" layoutY="353.0" mnemonicParsing="false" onAction="#backMainMenu" text="Fortryd"  />
+      <Button fx:id="send" layoutX="429.0" layoutY="353.0" mnemonicParsing="false" onAction="#createODAMember" text="Send" />
+      <Button fx:id="button_Cancel" layoutX="497.0" layoutY="353.0" mnemonicParsing="false" onAction="#backMainMenu" text="Fortryd" />
    </children>
 </Pane>
