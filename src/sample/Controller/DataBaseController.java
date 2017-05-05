@@ -9,7 +9,8 @@ import javafx.scene.control.TextField;
 import sample.Model.ODA_Member;
 
 import java.sql.*;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Created by Christian Findsen on 23-04-2017.
@@ -156,7 +157,7 @@ public class DataBaseController
         return searchODA;
     }
 
-    public void createMember(String firstName, String lastName, String address, int zipCode, String city, String date, String email)
+    public void createMember(String firstName, String lastName, String address, int zipCode, String city, LocalDate date, String email, int phone)
     {
 
         try {
@@ -164,20 +165,18 @@ public class DataBaseController
 
             PreparedStatement myStmt = myConnection.prepareStatement(
                     "INSERT INTO mydb.memberlist(First_Name,Last_Name,Address,Zipcode,City," +
-                            "Email,Birthday, Member_until, ID_Card_Number) "+
-                            "VALUES(?,?,?,?,?,?,?,?,?)");
-
-            myStmt.setString(1, firstName);
-            myStmt.setString(2, lastName);
-            myStmt.setString(3, address);
-            myStmt.setInt(4, zipCode);
-            myStmt.setString(5, city);
-            myStmt.setString(6, email);
-            myStmt.setString(7, date);
-            myStmt.setString(8,date);
-            myStmt.setString(9,"0");
-
-
+                            "Email,Phonenumber,Birthday, Member_until, Member_ID) "+
+                            "VALUES(" +
+                            "'"+firstName+"'" +
+                            ",'"+lastName+"'," +
+                            "'"+address+"'," +
+                            "'"+zipCode+"'," +
+                            "'"+city+"'," +
+                            "'"+email+"'," +
+                            "'"+phone+"'," +
+                            "'"+date+"'," +
+                            "'"+date+"'," +
+                            "'0')");
 
             myStmt.executeUpdate();
 

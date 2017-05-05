@@ -1,6 +1,7 @@
 package sample.Controller;
 
 
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,16 +9,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.paint.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import sample.Model.ODA_Member;
 
-import javax.xml.soap.Text;
+
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+
 import java.util.ResourceBundle;
 
 import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
@@ -38,6 +44,8 @@ public class Controller implements Initializable
     @FXML private TextField textfield_City;
     @FXML private DatePicker datepicker_Birthday;
     @FXML private TextField textfield_Email;
+    @FXML private TextField textfield_Phone;
+    @FXML private Label label_Saved;
 
 
     //Login
@@ -48,7 +56,6 @@ public class Controller implements Initializable
 
     //Memberlist
     @FXML private TableView Member_Table         = new TableView();
-    @FXML private TableColumn memberIdColumn     = new TableColumn();
     @FXML private TableColumn first_nameColumn   = new TableColumn();
     @FXML private TableColumn last_nameColumn    = new TableColumn();
     @FXML private TableColumn addressColumn      = new TableColumn();
@@ -106,6 +113,7 @@ public class Controller implements Initializable
 
     public void refresh()
     {
+
         Member_Table.setItems(dataBaseController.getMember());
 
     }
@@ -117,17 +125,41 @@ public class Controller implements Initializable
 
     public void createODAMember()
     {
+        System.out.println("Før Convert: " + datepicker_Birthday.getValue());
 
 
-        dataBaseController.createMember(FirstName.getText(),
+        dataBaseController.createMember(
+                FirstName.getText(),
                 LastName.getText(),
                 textfield_Adress.getText(),
                 Integer.parseInt(textfield_ZipCode.getText()),
                 textfield_City.getText(),
-                (datepicker_Birthday.getEditor()).getText(),
-                textfield_Email.getText());
-    }
+                datepicker_Birthday.getValue(),
+                textfield_Email.getText(),
+                Integer.parseInt(textfield_Phone.getText())
+        );
 
+        FirstName.clear();
+        LastName.clear();
+        textfield_Adress.clear();
+        textfield_ZipCode.clear();
+        textfield_City.clear();
+        datepicker_Birthday.getEditor().clear();
+        textfield_Email.clear();
+        textfield_Phone.clear();
+
+
+        label_Saved.setTextFill(Color.GREEN);
+        label_Saved.setText("Medlem oprettet \n ");
+
+                PauseTransition delayForClose = new PauseTransition(Duration.seconds(10));
+        delayForClose.setOnFinished(e1 -> {
+            label_Saved.setText(" ");
+            label_Saved.setTextFill(null);
+
+        });
+        delayForClose.play();
+    }
 
 
     @Override
@@ -275,9 +307,10 @@ public class Controller implements Initializable
             }
         });
 
+
         Member_Table.setItems(dataBaseController.getMember());
         Member_Table.setEditable(true);
 
-
     }
+
 }
