@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * Created by Christian Findsen on 23-04-2017.
  */
-public class DataBaseController
+class DataBaseController
 {
     private String url = "jdbc:mysql://localhost:3306?useSSL=false";
     private String user = "root";
@@ -101,6 +101,7 @@ public class DataBaseController
             Statement myStmt = myConnection.createStatement();
 
             myStmt.executeUpdate("UPDATE mydb.memberlist SET "+column+" = "+"\'"+ correction+"\'"+" WHERE Member_ID = "+pos+";");
+
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -186,6 +187,23 @@ public class DataBaseController
         }
 
 
+
+
+    }
+
+    public void deleteMemberDb(int id)
+    {
+        try {
+            connectionForDB();
+
+            Statement myStmt = myConnection.createStatement();
+
+            myStmt.executeUpdate("DELETE From mydb.memberlist WHERE Member_ID = "+id+";");
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
 
     }

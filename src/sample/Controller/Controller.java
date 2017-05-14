@@ -16,23 +16,23 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import sample.Model.ODA_Member;
-
-
 import java.io.IOException;
 import java.net.URL;
-
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
 
 import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 
 
 public class Controller implements Initializable
 {
+
     private static Stage mainStage;
-    private DataBaseController dataBaseController = new DataBaseController();
+    private final DataBaseController dataBaseController = new DataBaseController();
+    private static final LogController lc = new LogController();
 
 
 
@@ -55,7 +55,7 @@ public class Controller implements Initializable
     // Mainmenu
 
     //Memberlist
-    @FXML private TableView Member_Table         = new TableView();
+    @FXML private TableView <ODA_Member>Member_Table         = new TableView();
     @FXML private TableColumn first_nameColumn   = new TableColumn();
     @FXML private TableColumn last_nameColumn    = new TableColumn();
     @FXML private TableColumn addressColumn      = new TableColumn();
@@ -123,12 +123,30 @@ public class Controller implements Initializable
         Member_Table.setItems(dataBaseController.searchMember(search_FirstName.getText(),search_LastName.getText()));
     }
 
-    public void createODAMember()
+    private void clearMember()
     {
-        System.out.println("Før Convert: " + datepicker_Birthday.getValue());
+        FirstName.clear();
+        LastName.clear();
+        textfield_Adress.clear();
+        textfield_ZipCode.clear();
+        textfield_City.clear();
+        datepicker_Birthday.getEditor().clear();
+        textfield_Email.clear();
+        textfield_Phone.clear();
+    }
 
+    public void createODAMember() throws IOException
+    {
+        String msg = " >>CREATED<< "+FirstName.getText()+
+                     " " + LastName.getText()+
+                     " "+textfield_Adress.getText()+
+                     " "+Integer.parseInt(textfield_ZipCode.getText())+
+                     " "+textfield_City.getText()+
+                     " "+datepicker_Birthday.getValue()+
+                     " "+ textfield_Email.getText()+
+                     " "+Integer.parseInt(textfield_Phone.getText());
 
-        dataBaseController.createMember(
+               dataBaseController.createMember(
                 FirstName.getText(),
                 LastName.getText(),
                 textfield_Adress.getText(),
@@ -139,26 +157,46 @@ public class Controller implements Initializable
                 Integer.parseInt(textfield_Phone.getText())
         );
 
-        FirstName.clear();
-        LastName.clear();
-        textfield_Adress.clear();
-        textfield_ZipCode.clear();
-        textfield_City.clear();
-        datepicker_Birthday.getEditor().clear();
-        textfield_Email.clear();
-        textfield_Phone.clear();
-
-
         label_Saved.setTextFill(Color.GREEN);
-        label_Saved.setText("Medlem oprettet \n ");
+        label_Saved.setText("Medlem\n oprettet \n ");
 
-                PauseTransition delayForClose = new PauseTransition(Duration.seconds(10));
-        delayForClose.setOnFinished(e1 -> {
-            label_Saved.setText(" ");
-            label_Saved.setTextFill(null);
+                PauseTransition delayForLabel = new PauseTransition(Duration.seconds(10));
+        delayForLabel.setOnFinished(event -> label_Saved.setText(" "));
 
-        });
+        PauseTransition delayForClose = new PauseTransition(Duration.seconds(1));
+        delayForClose.setOnFinished(event ->
+        clearMember()
+        );
+
         delayForClose.play();
+
+        lc.logController(msg);
+
+    }
+
+    public void deleteMember() throws IOException
+    {
+        int selectedMember = Member_Table.getSelectionModel().getSelectedIndex();
+        ODA_Member odamember = Member_Table.getSelectionModel().getSelectedItem();
+        String msg =" >>DELETED<< "+ odamember.toString() ;
+
+        if (selectedMember >= 0)
+        {
+            Member_Table.getItems().remove(selectedMember);
+            dataBaseController.deleteMemberDb(odamember.getMemberId());
+            System.out.println(odamember + " er blevet slettet.");
+            lc.logController(msg);
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            //alert.initOwner(mainStage.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
     }
 
 
@@ -166,17 +204,25 @@ public class Controller implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
 
+
         first_nameColumn.setCellValueFactory(new PropertyValueFactory<ODA_Member, String>("first_Name"));
         first_nameColumn.setCellFactory(forTableColumn());
         first_nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ODA_Member,String>>()
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setFirst_Name(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setFirst_Name(event.getNewValue());
+
 
                 dataBaseController.updateMember("First_Name",event.getNewValue(),event.getRowValue().getMemberId());
+
             }
         });
 
@@ -187,9 +233,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setLast_Name(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setLast_Name(event.getNewValue());
+
 
                 dataBaseController.updateMember("Last_Name",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -201,9 +253,14 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setAddress(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setAddress(event.getNewValue());
 
                 dataBaseController.updateMember("Address",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -215,9 +272,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, Integer> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setZipcode(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setZipcode(event.getNewValue());
+
 
                dataBaseController.updateMember("Zipcode",String.valueOf(event.getNewValue()),event.getRowValue().getMemberId());
             }
@@ -229,9 +292,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setCity(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setCity(event.getNewValue());
+
 
                 dataBaseController.updateMember("City",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -243,9 +312,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setEmail(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setEmail(event.getNewValue());
+
 
                 dataBaseController.updateMember("Email",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -257,9 +332,14 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setPhoneNumber(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setPhoneNumber(event.getNewValue());
 
                 dataBaseController.updateMember("Phonenumber",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -271,9 +351,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setBirthday(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setBirthday(event.getNewValue());
+
 
                 dataBaseController.updateMember("Birthday",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -285,9 +371,15 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setMember_Until(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setMember_Until(event.getNewValue());
+
 
                 dataBaseController.updateMember("Member_until",event.getNewValue(),event.getRowValue().getMemberId());
             }
@@ -299,9 +391,14 @@ public class Controller implements Initializable
         {
             public void handle(TableColumn.CellEditEvent<ODA_Member, String> event)
             {
-                ((ODA_Member) event.getTableView().getItems().get(event.getTablePosition().getRow())).setId(event.getNewValue());
-                System.out.println("Ændrer "+ event.getOldValue()+" til: "+event.getNewValue());
-                System.out.println(event.getRowValue().getMemberId());
+                String msg = (" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() );
+                System.out.println((" >>UPDATE<< FROM: "+ event.getOldValue() +" TO: "+event.getNewValue()+" ON "+ event.getRowValue() ));
+                try {
+                    lc.logController(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setId(event.getNewValue());
 
                 dataBaseController.updateMember("ID_Card_Number",event.getNewValue(),event.getRowValue().getMemberId());
             }
