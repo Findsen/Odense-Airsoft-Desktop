@@ -20,7 +20,6 @@ import javafx.util.converter.IntegerStringConverter;
 import sample.Model.ODA_Member;
 import java.io.IOException;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 
@@ -50,7 +49,8 @@ public class Controller implements Initializable
 
     //Login
     @FXML private PasswordField Login_passwordField;
-    @FXML private TextField Login_textField;
+    @FXML private TextField  Login_textField;
+
 
     // Mainmenu
 
@@ -85,9 +85,23 @@ public class Controller implements Initializable
 
     public void loginPressed() throws IOException
     {
-        Parent login = FXMLLoader.load(getClass().getResource("../View/MainMenu.fxml"));
-        Scene mainScene = new Scene(login);
-        mainStage.setScene(mainScene);
+
+
+        if (dataBaseController.adminLogin(Login_textField.getText(),Login_passwordField.getText()))
+        {
+            Parent login = FXMLLoader.load(getClass().getResource("../View/MainMenu.fxml"));
+            Scene mainScene = new Scene(login);
+            mainStage.setScene(mainScene);
+            lc.logController(">>> "+Login_textField.getText()+" has logged in <<<");
+        }else
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Wrong Login");
+            alert.setContentText("Wrong user and/or password");
+            alert.showAndWait();
+        }
+
     }
 
     public void backMainMenu() throws IOException
@@ -190,11 +204,9 @@ public class Controller implements Initializable
         else
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            //alert.initOwner(mainStage.getPrimaryStage());
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
-
             alert.showAndWait();
         }
     }
@@ -202,6 +214,7 @@ public class Controller implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
+
     {
 
 

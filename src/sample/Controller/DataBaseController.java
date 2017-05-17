@@ -8,6 +8,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import sample.Model.ODA_Member;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -206,6 +207,39 @@ class DataBaseController
         }
 
 
+    }
+
+    public boolean adminLogin(String user, String pw)
+    {
+        boolean check = false;
+        String Login_Name = null;
+        String Login_Password = null;
+
+        try {
+            connectionForDB();
+            Statement mystate = myConnection.createStatement();
+
+            ResultSet rs = mystate.executeQuery
+                    ("Select * FROM mydb.adminlist WHERE username = '"+user+"'");
+
+            while(rs.next()) {
+                Login_Name = rs.getString("username");
+                Login_Password = rs.getString("pw");
+
+
+            }
+            if ((user.equals(Login_Name)&& pw.equals(Login_Password) ) ){
+                check= true;
+                System.out.println(user);
+
+            } else {
+                check = false;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return check;
     }
 }
 
